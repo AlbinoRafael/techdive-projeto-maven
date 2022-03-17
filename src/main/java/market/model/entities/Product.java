@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -27,7 +28,7 @@ public class Product {
 	@Column(nullable = false)
 	private BigDecimal price;
 	
-	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private Category category;
 	
