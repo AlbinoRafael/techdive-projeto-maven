@@ -1,6 +1,7 @@
 package market.services;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,11 +32,10 @@ public class ProductService {
 		try {
 			getBeginTransaction();
 			this.productDAO.create(product);
-			
 			commitAndCloseTransaction();
 		} catch (Exception e) {
 			this.LOG.error("Erro ao criar um produto, causado por: " + e.getMessage());
-			throw new RuntimeException();
+			throw new RuntimeException("The ID is null");
 		}
 		this.LOG.info("Produto foi criado com sucesso");
 	}
@@ -47,5 +47,23 @@ public class ProductService {
 
 	private void getBeginTransaction() {
 		entityManager.getTransaction().begin();
+	}
+	
+	public void delete(Long id) {
+		this.LOG.info("Preparando para procurar o produto");
+		if(id==null) {
+			this.LOG.error("o ID do produto está nulo");
+			throw new RuntimeException("The ID is null");
+		}
+		Product product = this.productDAO.getById(id);
+		if(product == null) {
+			this.LOG.error("O produto não existe");
+			throw new EntityNotFoundException("Product not found");
+		}
+		this.LOG.info("Produto encontrado com sucesso");
+		getBeginTransaction();
+		this.productDAO.delete(product);
+		this.LOG.info("Produto deletado com sucesso");
+		commitAndCloseTransaction();
 	}
 }
