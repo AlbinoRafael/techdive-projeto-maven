@@ -1,4 +1,4 @@
-package market.model.entities;
+package market.model.persistence;
 
 import java.math.BigDecimal;
 
@@ -34,8 +34,8 @@ public class Product {
 	public Product() {}
 
 	public Product(String name, String description, BigDecimal price, Category category) {
-		this.name = name;
-		this.description = description;
+		this.name = name.toLowerCase();
+		this.description = description.toLowerCase();;
 		this.price = price;
 		this.category = category;
 	}

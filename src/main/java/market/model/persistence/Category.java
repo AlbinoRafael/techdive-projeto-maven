@@ -1,10 +1,11 @@
-package market.model.entities;
+package market.model.persistence;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+@Entity
 public class Category {
 
 	@Id
@@ -18,8 +19,7 @@ public class Category {
 	}
 
 	public Category(String name) {
-		super();
-		this.name = name;
+		this.name = name.toLowerCase();
 	}
 	
 	public long getId() {
